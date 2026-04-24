@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="src/KodaFlow.Api/KodaFlow.Api.csproj" />
+  <Project Path="src/KodaFlow.Application/KodaFlow.Application.csproj" />
+  <Project Path="src/KodaFlow.Domain/KodaFlow.Domain.csproj" />
+  <Project Path="src/KodaFlow.Infrastructure/KodaFlow.Infrastructure.csproj" />
+</Solution>

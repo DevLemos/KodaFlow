@@ -1,0 +1,2 @@
+## 🚀 KodeFlow
+O KodeFlow é um ecossistema completo para Gestão de Clínicas Veterinárias desenvolvido com foco em alta coesão e baixo acoplamento. O projeto serve como demonstração técnica de uma aplicação moderna de ponta a ponta (Full Stack).

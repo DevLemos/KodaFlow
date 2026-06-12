@@ -155,7 +155,14 @@ namespace KodeFlow.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("nr_Telefone");
 
+                    b.Property<int>("TutorId")
+                        .HasColumnType("int")
+                        .HasColumnName("id_Tutor");
+
                     b.HasKey("ContatoId");
+
+                    b.HasIndex("TutorId")
+                        .IsUnique();
 
                     b.ToTable("tbl_Contatos");
                 });
@@ -210,7 +217,14 @@ namespace KodeFlow.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("ds_Rua");
 
+                    b.Property<int>("TutorId")
+                        .HasColumnType("int")
+                        .HasColumnName("id_Tutor");
+
                     b.HasKey("EnderecoId");
+
+                    b.HasIndex("TutorId")
+                        .IsUnique();
 
                     b.ToTable("tbl_Enderecos");
                 });
@@ -345,14 +359,6 @@ namespace KodeFlow.Migrations
                         .HasColumnType("nvarchar(14)")
                         .HasColumnName("ds_CPF");
 
-                    b.Property<int>("ContatoId")
-                        .HasColumnType("int")
-                        .HasColumnName("id_Contato");
-
-                    b.Property<int>("EnderecoId")
-                        .HasColumnType("int")
-                        .HasColumnName("id_Endereco");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -360,12 +366,6 @@ namespace KodeFlow.Migrations
                         .HasColumnName("ds_Nome");
 
                     b.HasKey("TutorId");
-
-                    b.HasIndex("ContatoId")
-                        .IsUnique();
-
-                    b.HasIndex("EnderecoId")
-                        .IsUnique();
 
                     b.ToTable("tbl_Tutores");
                 });
@@ -449,6 +449,28 @@ namespace KodeFlow.Migrations
                     b.Navigation("Veterinario");
                 });
 
+            modelBuilder.Entity("KodeFlow.Models.Entities.Contato", b =>
+                {
+                    b.HasOne("KodeFlow.Models.Entities.Tutor", "Tutor")
+                        .WithOne("Contato")
+                        .HasForeignKey("KodeFlow.Models.Entities.Contato", "TutorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tutor");
+                });
+
+            modelBuilder.Entity("KodeFlow.Models.Entities.Endereco", b =>
+                {
+                    b.HasOne("KodeFlow.Models.Entities.Tutor", "Tutor")
+                        .WithOne("Endereco")
+                        .HasForeignKey("KodeFlow.Models.Entities.Endereco", "TutorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tutor");
+                });
+
             modelBuilder.Entity("KodeFlow.Models.Entities.Prontuario", b =>
                 {
                     b.HasOne("KodeFlow.Models.Entities.Consulta", "Consulta")
@@ -471,25 +493,6 @@ namespace KodeFlow.Migrations
                     b.Navigation("Especie");
                 });
 
-            modelBuilder.Entity("KodeFlow.Models.Entities.Tutor", b =>
-                {
-                    b.HasOne("KodeFlow.Models.Entities.Contato", "Contato")
-                        .WithOne("Tutor")
-                        .HasForeignKey("KodeFlow.Models.Entities.Tutor", "ContatoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KodeFlow.Models.Entities.Endereco", "Endereco")
-                        .WithOne("Tutor")
-                        .HasForeignKey("KodeFlow.Models.Entities.Tutor", "EnderecoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Contato");
-
-                    b.Navigation("Endereco");
-                });
-
             modelBuilder.Entity("KodeFlow.Models.Entities.Animal", b =>
                 {
                     b.Navigation("Consultas");
@@ -498,18 +501,6 @@ namespace KodeFlow.Migrations
             modelBuilder.Entity("KodeFlow.Models.Entities.Consulta", b =>
                 {
                     b.Navigation("Prontuario")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("KodeFlow.Models.Entities.Contato", b =>
-                {
-                    b.Navigation("Tutor")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("KodeFlow.Models.Entities.Endereco", b =>
-                {
-                    b.Navigation("Tutor")
                         .IsRequired();
                 });
 
@@ -526,6 +517,12 @@ namespace KodeFlow.Migrations
             modelBuilder.Entity("KodeFlow.Models.Entities.Tutor", b =>
                 {
                     b.Navigation("Animais");
+
+                    b.Navigation("Contato")
+                        .IsRequired();
+
+                    b.Navigation("Endereco")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("KodeFlow.Models.Entities.Veterinario", b =>

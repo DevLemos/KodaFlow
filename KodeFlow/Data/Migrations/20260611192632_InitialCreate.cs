@@ -6,45 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace KodeFlow.Migrations
 {
     /// <inheritdoc />
-    public partial class InicialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "tbl_Contatos",
-                columns: table => new
-                {
-                    id_Contato = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nr_Telefone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    nr_Celular = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    ds_Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tbl_Contatos", x => x.id_Contato);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "tbl_Enderecos",
-                columns: table => new
-                {
-                    id_Endereco = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ds_Rua = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    ds_Numero = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    ds_Complemento = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ds_Bairro = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ds_Cidade = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ds_Estado = table.Column<string>(type: "char(2)", maxLength: 2, nullable: false),
-                    ds_Cep = table.Column<string>(type: "char(9)", maxLength: 9, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tbl_Enderecos", x => x.id_Endereco);
-                });
-
             migrationBuilder.CreateTable(
                 name: "tbl_Especialidades",
                 columns: table => new
@@ -74,6 +40,20 @@ namespace KodeFlow.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "tbl_Tutores",
+                columns: table => new
+                {
+                    id_Tutor = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ds_Nome = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ds_CPF = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tbl_Tutores", x => x.id_Tutor);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tbl_Veterinarios",
                 columns: table => new
                 {
@@ -85,34 +65,6 @@ namespace KodeFlow.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tbl_Veterinarios", x => x.id_Veterinario);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "tbl_Tutores",
-                columns: table => new
-                {
-                    id_Tutor = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ds_Nome = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ds_CPF = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
-                    id_Contato = table.Column<int>(type: "int", nullable: false),
-                    id_Endereco = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tbl_Tutores", x => x.id_Tutor);
-                    table.ForeignKey(
-                        name: "FK_tbl_Tutores_tbl_Contatos_id_Contato",
-                        column: x => x.id_Contato,
-                        principalTable: "tbl_Contatos",
-                        principalColumn: "id_Contato",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_tbl_Tutores_tbl_Enderecos_id_Endereco",
-                        column: x => x.id_Endereco,
-                        principalTable: "tbl_Enderecos",
-                        principalColumn: "id_Endereco",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,6 +84,54 @@ namespace KodeFlow.Migrations
                         column: x => x.id_Especie,
                         principalTable: "tbl_Especies",
                         principalColumn: "id_Especie",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tbl_Contatos",
+                columns: table => new
+                {
+                    id_Contato = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nr_Telefone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    nr_Celular = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    ds_Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    id_Tutor = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tbl_Contatos", x => x.id_Contato);
+                    table.ForeignKey(
+                        name: "FK_tbl_Contatos_tbl_Tutores_id_Tutor",
+                        column: x => x.id_Tutor,
+                        principalTable: "tbl_Tutores",
+                        principalColumn: "id_Tutor",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tbl_Enderecos",
+                columns: table => new
+                {
+                    id_Endereco = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ds_Rua = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    ds_Numero = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    ds_Complemento = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ds_Bairro = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ds_Cidade = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ds_Estado = table.Column<string>(type: "char(2)", maxLength: 2, nullable: false),
+                    ds_Cep = table.Column<string>(type: "char(9)", maxLength: 9, nullable: false),
+                    id_Tutor = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tbl_Enderecos", x => x.id_Endereco);
+                    table.ForeignKey(
+                        name: "FK_tbl_Enderecos_tbl_Tutores_id_Tutor",
+                        column: x => x.id_Tutor,
+                        principalTable: "tbl_Tutores",
+                        principalColumn: "id_Tutor",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -268,6 +268,18 @@ namespace KodeFlow.Migrations
                 column: "id_Veterinario");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tbl_Contatos_id_Tutor",
+                table: "tbl_Contatos",
+                column: "id_Tutor",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tbl_Enderecos_id_Tutor",
+                table: "tbl_Enderecos",
+                column: "id_Tutor",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tbl_Prontuarios_id_Consulta",
                 table: "tbl_Prontuarios",
                 column: "id_Consulta",
@@ -277,18 +289,6 @@ namespace KodeFlow.Migrations
                 name: "IX_tbl_Racas_id_Especie",
                 table: "tbl_Racas",
                 column: "id_Especie");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tbl_Tutores_id_Contato",
-                table: "tbl_Tutores",
-                column: "id_Contato",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tbl_Tutores_id_Endereco",
-                table: "tbl_Tutores",
-                column: "id_Endereco",
-                unique: true);
         }
 
         /// <inheritdoc />
@@ -296,6 +296,12 @@ namespace KodeFlow.Migrations
         {
             migrationBuilder.DropTable(
                 name: "EspecialidadeVeterinario");
+
+            migrationBuilder.DropTable(
+                name: "tbl_Contatos");
+
+            migrationBuilder.DropTable(
+                name: "tbl_Enderecos");
 
             migrationBuilder.DropTable(
                 name: "tbl_Prontuarios");
@@ -320,12 +326,6 @@ namespace KodeFlow.Migrations
 
             migrationBuilder.DropTable(
                 name: "tbl_Especies");
-
-            migrationBuilder.DropTable(
-                name: "tbl_Contatos");
-
-            migrationBuilder.DropTable(
-                name: "tbl_Enderecos");
         }
     }
 }

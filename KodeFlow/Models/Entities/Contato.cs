@@ -25,6 +25,9 @@ public class Contato
     [Column(name: "ds_Email")]
     public string Email { get; set; } = string.Empty;
 
-    public Tutor Tutor { get; set; } = null!;
+    [ForeignKey(nameof(Tutor))]
+    [Column(name: "id_Tutor")]
+    public int TutorId { get; set; }
+    public Tutor? Tutor { get; set; }
 
 }

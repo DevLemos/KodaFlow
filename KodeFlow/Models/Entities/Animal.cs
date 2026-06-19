@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using KodeFlow.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using KodeFlow.Domain.Enums;
+using System.Text.Json.Serialization;
 
 namespace KodeFlow.Models.Entities;
 
@@ -38,8 +39,8 @@ public class Animal
     [ForeignKey(nameof(Tutor))]
     [Column("id_Tutor")]
     public int TutorId { get; set; }
-
     public Tutor Tutor { get; set; } = null!;
 
+    [JsonIgnore]
     public ICollection<Consulta> Consultas { get; private set; } = new List<Consulta>();
 }

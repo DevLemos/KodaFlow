@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using KodeFlow.Validations;
 
 namespace KodeFlow.Models.Entities;
 
@@ -13,6 +15,7 @@ public class Tutor
     [Required]
     [StringLength(255)]
     [Column(name: "ds_Nome")]
+    [PrimeiraLetraMaiuscula] //Atributo personalizado
     public string Nome { get; set; } = string.Empty;
 
     [Required]
@@ -20,15 +23,13 @@ public class Tutor
     [Column("ds_CPF")]
     public string CPF { get; set; } = string.Empty;
 
-    [ForeignKey(nameof(Contato))]
-    [Column("id_Contato")]
-    public int ContatoId { get; set; }
+    [JsonIgnore]
     public Contato Contato { get; set; } = null!;
 
-    [ForeignKey(nameof(Endereco))]
-    [Column("id_Endereco")]
-    public int EnderecoId { get; set; }
+    [JsonIgnore]
     public Endereco Endereco { get; set; } = null!;
+
+    [JsonIgnore]
     public ICollection<Animal> Animais { get; set; } = new List<Animal>();
 
 }

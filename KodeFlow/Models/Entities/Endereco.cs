@@ -44,5 +44,8 @@ public class Endereco
     [Column(name: "ds_Cep", TypeName = "char(9)")]
     public string CEP { get; set; } = string.Empty;
 
-    public Tutor Tutor { get; set; } = null!;
+    [ForeignKey(nameof(Tutor))]
+    [Column(name: "id_Tutor")]
+    public int TutorId { get; set; }
+    public Tutor? Tutor { get; set; }
 }

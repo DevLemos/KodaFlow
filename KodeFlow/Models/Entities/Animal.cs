@@ -39,6 +39,8 @@ public class Animal
     [ForeignKey(nameof(Tutor))]
     [Column("id_Tutor")]
     public int TutorId { get; set; }
+
+    [JsonIgnore]
     public Tutor Tutor { get; set; } = null!;
 
     [JsonIgnore]

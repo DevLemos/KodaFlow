@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace KodeFlow.Models.Entities;
 
@@ -28,6 +29,8 @@ public class Contato
     [ForeignKey(nameof(Tutor))]
     [Column(name: "id_Tutor")]
     public int TutorId { get; set; }
+
+    [JsonIgnore]
     public Tutor? Tutor { get; set; }
 
 }

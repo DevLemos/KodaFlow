@@ -1,5 +1,6 @@
 ﻿using KodeFlow.Data.Context;
 using KodeFlow.Models.Entities;
+using KodeFlow.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,6 +49,20 @@ namespace KodeFlow.Controllers
                 return NotFound($"O tutor com id:{id} não existe.");
 
             return Ok(tutor);
+        }
+
+        //FromService
+
+        [HttpGet("usandoFromService/{nome}")]
+        public ActionResult<string> GetService([FromServices] IMeuService service, string nome)
+        {
+            return service.Saudacoes(nome);
+        }
+
+        [HttpGet("semUsarFromService/{nome}")]
+        public ActionResult<string> GetServiceSemFrom(IMeuService service, string nome)
+        {
+            return service.Saudacoes(nome);
         }
 
 

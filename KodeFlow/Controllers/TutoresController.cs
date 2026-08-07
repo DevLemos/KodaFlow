@@ -10,11 +10,25 @@ namespace KodeFlow.Controllers
     public class TutoresController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public TutoresController(AppDbContext context)
+        public TutoresController(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
+
+        [HttpGet("Configuracoes")]
+        public string GetConfiguration()
+        {
+
+            string valorChave1 = _configuration["Estudos1"];
+            string valorChave2 = _configuration["Estudos2"];
+            string valorChaveSecao = _configuration["SecaoEstudos:chave1"];
+
+            return $"Chave 1: {valorChave1}, Chave 2: {valorChave2}, Seção Estudos (chave1): {valorChaveSecao}";
+        }
+
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tutor>>> GetTutoresAsync()

@@ -22,6 +22,10 @@ builder.Services.AddOpenApi();
 // Busca Connection String e Configura o AppDbContext =========================================================================================
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
+// Utilizando instância de IConfiguration na propriedade Configuration para buscar valores ====================================
+// do arquivo de configuração ====================================
+string valorChave1 = builder.Configuration["Estudos1"];
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(connectionString)

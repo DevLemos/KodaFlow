@@ -53,6 +53,8 @@ namespace KodeFlow.Controllers
         [HttpGet("{id:int}", Name = "GetTutorById")]
         public async Task<ActionResult<Tutor>> GetTutorAsync(int id)
         {
+            throw new Exception("Exceção ao retornar um tutor pelo id.");
+
             var tutor = await _context.Tutores
                 .Include(t => t.Contato)
                 .Include(t => t.Endereco)

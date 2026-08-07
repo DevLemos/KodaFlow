@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\DTOs\**" />
+    <Content Remove="Models\DTOs\**" />
+    <EmbeddedResource Remove="Models\DTOs\**" />
+    <None Remove="Models\DTOs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
@@ -15,10 +22,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.14.14" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\DTOs\" />
   </ItemGroup>
 
 </Project>
